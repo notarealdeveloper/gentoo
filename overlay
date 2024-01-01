@@ -1,18 +1,28 @@
 #!/bin/bash
 
 create() {
-    sudo eselect repository create overlay
-    rsync -av --delete /var/db/repos/overlay/ overlay/
+    local overlay="$1"
+    if [[ -z "$1" ]]; then
+        echo "usage: $(basename $0) $FUNCNAME <name>"
+        exit 11
+    fi
+    if [[ -e "$1" ]]; then
+        echo "error: $(basename $0) $FUNCNAME: $1 already exists, dying for safety"
+        exit 1
+    fi
+    sudo eselect repository create "$overlay"
+    rsync -av --delete "/var/db/repos/$overlay/" "$overlay/"
 
-    pushd overlay
+    pushd "$overlay"
     git init
     git add .
     git commit -m "Hello, world"
     gh repo create
+    gitremote="$(git remote get-url origin)"
     popd
 
-    sudo eselect repository remove -f overlay
-    sudo eselect repository add overlay git https://github.com/notarealdeveloper/overlay
+    sudo eselect repository remove -f "$overlay"
+    sudo eselect repository add "$overlay" git "$gitremote"
 }
 
 update() {
