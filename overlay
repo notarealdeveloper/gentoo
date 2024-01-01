@@ -1,13 +1,13 @@
 #!/bin/bash
 
 create() {
-    local overlay="${1-overlay}"
-    if [[ -z "$1" ]]; then
-        echo "usage: $(basename $0) $FUNCNAME <name>"
-        exit 11
+    local overlay="${1:-overlay}"
+    if [[ -e "$overlay" ]]; then
+        echo "error: $(basename $0) $FUNCNAME: $overlay already exists locally"
+        exit 1
     fi
-    if [[ -e "$1" ]]; then
-        echo "error: $(basename $0) $FUNCNAME: $1 already exists, dying for safety"
+    if eselect repository list -i | grep -q "$overlay.*@"; then
+        echo "error: $(basename $0) $FUNCNAME: $overlay already enabled in eselect"
         exit 1
     fi
     sudo eselect repository create "$overlay"
