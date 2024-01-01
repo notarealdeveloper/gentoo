@@ -31,7 +31,8 @@ update() {
 }
 
 sync() {
-    sudo emaint sync --repo overlay
+    local name=${1:-overlay}
+    sudo emaint sync --repo "$name"
 }
 
 copy() {
