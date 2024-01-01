@@ -19,3 +19,28 @@ update() {
     pkgdev manifest
     pkgcheck scan
 }
+
+sync() {
+    emaint sync --repo overlay
+}
+
+copy() {
+    local pkg="$1"
+    if [[ -z "$1" ]]; then
+        echo "usage: copy category/name"
+        return
+    fi
+    if [[ ! -d /var/db/repos/gentoo/"$1" ]]; then
+        echo "couldnt find ebuild directory: $1"
+        return
+    fi
+    dn="$(dirname "$pkg")"
+    bn="$(basename "$pkg")"
+
+    mkdir -pv "$dn/$bn"
+    cp -rv "/var/db/repos/gentoo/$dn/$bn" "$dn"
+}
+
+[ -z "$1" ] && echo "usage: $(basename $0) [create|update|sync]" && exit 1
+
+$@
