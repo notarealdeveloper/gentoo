@@ -37,12 +37,12 @@ sync() {
 
 copy() {
     local pkg="$1"
-    if [[ -z "$1" ]]; then
-        echo "usage: copy category/name"
+    if [[ -z "$pkg" ]]; then
+        echo "usage: $(basename $0) $FUNCNAME <category/name>"
         return
     fi
-    if [[ ! -d /var/db/repos/gentoo/"$1" ]]; then
-        echo "couldnt find ebuild directory: $1"
+    if [[ ! -d "/var/db/repos/gentoo/$pkg" ]]; then
+        echo "couldnt find ebuild directory: $pkg"
         return
     fi
     dn="$(dirname "$pkg")"
@@ -52,6 +52,6 @@ copy() {
     cp -rv "/var/db/repos/gentoo/$dn/$bn" "$dn"
 }
 
-[ -z "$1" ] && echo "usage: $(basename $0) [create|update|sync]" && exit 1
+[ -z "$1" ] && echo "usage: $(basename $0) [create|update|sync|copy]" && exit 1
 
 $@
