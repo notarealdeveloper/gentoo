@@ -4,7 +4,7 @@
 EAPI=8
 
 VERIFY_SIG_OPENPGP_KEY_PATH=/usr/share/openpgp-keys/thomasdickey.asc
-inherit flag-o-matic toolchain-funcs multilib multilib-minimal preserve-libs usr-ldscript verify-sig
+inherit toolchain-funcs multilib multilib-minimal preserve-libs usr-ldscript verify-sig
 
 MY_PV="${PV:0:3}"
 MY_P="${PN}-${MY_PV}"
@@ -89,7 +89,7 @@ LICENSE="MIT"
 # The subslot reflects the SONAME.
 SLOT="0/6"
 KEYWORDS="amd64"
-IUSE="ada +cxx debug doc gpm minimal profile split-usr +stack-realign static-libs test trace"
+IUSE="+cxx debug doc gpm minimal profile split-usr static-libs test"
 RESTRICT="!test? ( test )"
 
 DEPEND="gpm? ( sys-libs/gpm[${MULTILIB_USEDEP}] )"
@@ -186,12 +186,6 @@ src_configure() {
 }
 
 multilib_src_configure() {
-	if [[ ${ABI} == x86 ]] ; then
-		# For compatibility with older binaries at slight performance cost.
-		# bug #616402
-		use stack-realign && append-flags -mstackrealign
-	fi
-
 	local t
 	for t in "${NCURSES_TARGETS[@]}" ; do
 		do_configure "${t}"
@@ -222,7 +216,6 @@ do_configure() {
 		# just keeping it off for good, given nobody needed it until now
 		# (2022) and we're trying to phase out bdb.)
 		--without-hashed-db
-		$(use_with ada)
 		$(use_with cxx)
 		$(use_with cxx cxx-binding)
 		--with-cxx-shared
@@ -241,14 +234,12 @@ do_configure() {
 		--enable-colorfgbg
 		--enable-hard-tabs
 		--enable-echo
-		$(use_enable !ada warnings)
 		$(use_with debug assertions)
 		$(use_enable !debug leaks)
 		$(use_with debug expanded)
 		$(use_with !debug macros)
 		$(multilib_native_with progs)
 		$(use_with test tests)
-		$(use_with trace)
 		#$(use_with tinfo termlib)	# jw: disabled because it broke toybox `make menuconfig`
 		--disable-stripping
 		--disable-pkg-ldflags
