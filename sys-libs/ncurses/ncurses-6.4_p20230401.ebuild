@@ -249,7 +249,7 @@ do_configure() {
 		$(multilib_native_with progs)
 		$(use_with test tests)
 		$(use_with trace)
-		$(use_with tinfo termlib)
+		#$(use_with tinfo termlib)
 		--disable-stripping
 		--disable-pkg-ldflags
 	)
