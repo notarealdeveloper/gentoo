@@ -89,7 +89,7 @@ LICENSE="MIT"
 # The subslot reflects the SONAME.
 SLOT="0/6"
 KEYWORDS="amd64"
-IUSE="ada +cxx debug doc gpm minimal profile split-usr +stack-realign static-libs test tinfo trace"
+IUSE="ada +cxx debug doc gpm minimal profile split-usr +stack-realign static-libs test trace"
 RESTRICT="!test? ( test )"
 
 DEPEND="gpm? ( sys-libs/gpm[${MULTILIB_USEDEP}] )"
@@ -249,7 +249,7 @@ do_configure() {
 		$(multilib_native_with progs)
 		$(use_with test tests)
 		$(use_with trace)
-		#$(use_with tinfo termlib)
+		#$(use_with tinfo termlib)	# jw: disabled because it broke toybox `make menuconfig`
 		--disable-stripping
 		--disable-pkg-ldflags
 	)
