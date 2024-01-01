@@ -88,7 +88,7 @@ SRC_URI+=" https://dev.gentoo.org/~${GENTOO_PATCH_DEV}/distfiles/${CATEGORY}/${P
 LICENSE="MIT"
 # The subslot reflects the SONAME.
 SLOT="0/6"
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~loong ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux ~arm64-macos ~ppc-macos ~x64-macos ~x64-solaris"
+KEYWORDS="amd64"
 IUSE="ada +cxx debug doc gpm minimal profile split-usr +stack-realign static-libs test tinfo trace"
 RESTRICT="!test? ( test )"
 
@@ -96,10 +96,6 @@ DEPEND="gpm? ( sys-libs/gpm[${MULTILIB_USEDEP}] )"
 # Block the older ncurses that installed all files w/SLOT=5, bug #557472
 RDEPEND="
 	${DEPEND}
-	!<=sys-libs/ncurses-5.9-r4:5
-	!<sys-libs/slang-2.3.2_pre23
-	!<x11-terms/rxvt-unicode-9.06-r3
-	!<x11-terms/st-0.6-r1
 "
 BDEPEND="verify-sig? ( sec-keys/openpgp-keys-thomasdickey )"
 
