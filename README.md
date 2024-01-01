@@ -1,0 +1,3 @@
+# Gentoo
+
+Gentoo Linux configuration.
