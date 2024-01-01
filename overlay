@@ -1,0 +1,21 @@
+#!/bin/bash
+
+create() {
+    sudo eselect repository create overlay
+    rsync -av --delete /var/db/repos/overlay/ overlay/
+
+    pushd overlay
+    git init
+    git add .
+    git commit -m "Hello, world"
+    gh repo create
+    popd
+
+    sudo eselect repository remove -f overlay
+    sudo eselect repository add overlay git https://github.com/notarealdeveloper/overlay
+}
+
+update() {
+    pkgdev manifest
+    pkgcheck scan
+}
