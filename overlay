@@ -21,7 +21,7 @@ update() {
 }
 
 sync() {
-    emaint sync --repo overlay
+    sudo emaint sync --repo overlay
 }
 
 copy() {
