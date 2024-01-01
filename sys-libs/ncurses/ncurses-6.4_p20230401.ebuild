@@ -349,13 +349,6 @@ multilib_src_install() {
 	# -FIXME-
 	dosym $(sed 's@[^/]\+@..@g' <<< $(get_libdir))/share/terminfo \
 		/usr/$(get_libdir)/terminfo
-
-	# Remove obsolete libcurses symlink that is created by the build
-	# system. Technically, this could be also achieved
-	# via --disable-overwrite but it also moves headers implicitly,
-	# and we do not want to do this yet.
-	# bug #836696
-	rm "${ED}"/usr/$(get_libdir)/libcurses* || die
 }
 
 multilib_src_install_all() {
