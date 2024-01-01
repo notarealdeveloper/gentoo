@@ -89,7 +89,7 @@ LICENSE="MIT"
 # The subslot reflects the SONAME.
 SLOT="0/6"
 KEYWORDS="amd64"
-IUSE="+cxx debug doc gpm minimal profile split-usr static-libs test"
+IUSE="+cxx debug doc gpm minimal profile split-usr static-libs test tinfo"
 RESTRICT="!test? ( test )"
 
 DEPEND="gpm? ( sys-libs/gpm[${MULTILIB_USEDEP}] )"
