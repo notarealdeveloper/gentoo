@@ -1,3 +1,3 @@
-# Gentoo
+# gentoo
 
-Gentoo Linux configuration.
+Gentoo Linux overlay
