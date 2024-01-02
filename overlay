@@ -33,7 +33,7 @@ update() {
 sync() {
     local name=${1:-overlay}
     sudo emaint sync --repo "$name"
-    sudo egencache --repo "$name" --update-use-local-desc
+    #sudo egencache --repo "$name" --update-use-local-desc
 }
 
 copy() {
